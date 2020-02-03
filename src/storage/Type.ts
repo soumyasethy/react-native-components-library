@@ -1,0 +1,16 @@
+export const asyncStorage = {
+  token: 'token',
+  refresh: 'refresh',
+  access: 'access',
+  id: 'id',
+  username: 'username',
+  email: 'email',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  is_staff: 'is_staff',
+  date_joined: 'date_joined',
+  groups: 'groups',
+  loginData: 'loginData',
+  selectedCity: 'selectedCity',
+  selectedFacility: 'selectedFacility',
+};

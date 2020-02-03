@@ -1,0 +1,33 @@
+{
+  "name": "licious-component-library",
+  "version": "1.0.0",
+  "description": "Quick way to start developing React Native UI component.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watcher-add": "wml add ~/Desktop/Licious/licious-component-library-rn/ ~/Desktop/Licious/licious-storybook-rn/node_modules/licious-component-library/",
+    "watch-start": "wml start",
+    "watch-stop": "wml rm-all",
+    "watch-single": "wml rm 0",
+    "watch-list": "wml list"
+  },
+  "keywords": [
+    "react-native",
+    "starter",
+    "component",
+    "library",
+    "module starter",
+    "package starter",
+    "library starter"
+  ],
+  "author": "Soumya Ranjan Sethy",
+  "license": "ISC",
+  "devDependencies": {
+    "react": "16.9.0",
+    "react-native": "0.60"
+  },
+  "dependencies": {
+    "styled-components": "^4.3.2",
+    "@react-native-community/async-storage": "^1.7.1"
+  }
+}
