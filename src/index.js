@@ -7,8 +7,12 @@ import {
   Questions,
   OptionCard,
   OptionPicker,
-  SingleMultiChoiceCard
+  DynamicQuestionCard,
+  MapCard
 } from "./components";
+import { AppContainer } from "./components/hoc/AppContainer";
+import { questionType } from "./components/functionalComp/";
+import Swiper from "react-native-swiper";
 
 export {
   s,
@@ -20,5 +24,9 @@ export {
   Questions,
   OptionCard,
   OptionPicker,
-  SingleMultiChoiceCard
+  DynamicQuestionCard,
+  MapCard,
+  questionType,
+  AppContainer,
+  Swiper
 };

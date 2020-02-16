@@ -1,5 +1,6 @@
-import Questions from "./QuestionCard";
+import {CompletedStatusCard} from "./CompletedStatusCard";
 import { OptionCard } from "./OptionCard";
 import { OptionPicker } from "./OptionPicker";
+import {MapCard} from "./MapCard";
 
-export { Questions, OptionCard, OptionPicker };
+export { CompletedStatusCard, OptionCard, OptionPicker, MapCard };

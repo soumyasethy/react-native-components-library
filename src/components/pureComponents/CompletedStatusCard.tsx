@@ -10,7 +10,7 @@ import {
 import { COLORS } from "../../utils/Colors";
 import { shadow } from "../../utils/Shadow";
 
-export default QuestionCard = props => {
+export const CompletedStatusCard = props => {
   return (
     <View
       style={{

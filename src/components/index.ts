@@ -1,13 +1,21 @@
-import { Questions, OptionCard, OptionPicker } from "./pureComponents";
+import {
+  CompletedStatusCard,
+  OptionCard,
+  OptionPicker,
+  MapCard
+} from "./pureComponents";
+import { questionType } from "../components/functionalComp";
 import { AppContainer } from "./hoc/AppContainer";
 import { COLORS } from "../utils/Colors";
-import SingleMultiChoiceCard from "./pureComponents/SingleMultiChoiceCard";
+import DynamicQuestionCard from "./pureComponents/DynamicQuestionCard";
 
 export {
   AppContainer,
-  Questions,
+  CompletedStatusCard,
   OptionCard,
   OptionPicker,
   COLORS,
-  SingleMultiChoiceCard
+  DynamicQuestionCard,
+  MapCard,
+  questionType
 };

@@ -27,7 +27,10 @@
     "react-native": "0.60"
   },
   "dependencies": {
-    "styled-components": "^4.3.2",
-    "@react-native-community/async-storage": "^1.7.1"
+    "@react-native-community/async-storage": "^1.7.1",
+    "react-native-geolocation-service": "^4.0.0",
+    "react-native-maps": "0.26.1",
+    "react-native-swiper": "^1.6.0-nightly.5",
+    "styled-components": "^4.3.2"
   }
 }

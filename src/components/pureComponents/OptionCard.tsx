@@ -16,7 +16,8 @@ export const OptionCard = props => {
         borderRadius: mS(5),
         borderColor: COLORS.blue,
         borderWidth: mS(0.5),
-        ...shadow
+        ...shadow,
+        ...(props.style ? props.style : null)
       }}
     >
       {
@@ -25,7 +26,9 @@ export const OptionCard = props => {
             margin: mS(5)
           }}
         >
-          <Text style={{ color: COLORS.white, fontSize: mS(18) }}>
+          <Text
+            style={{ color: COLORS.white, fontSize: mS(18), fontWeight: "500" }}
+          >
             {props.item}
           </Text>
         </View>
@@ -42,7 +45,8 @@ export const OptionCard = props => {
         borderRadius: mS(5),
         borderColor: COLORS.blue,
         borderWidth: mS(0.5),
-        ...shadow
+        ...shadow,
+        ...(props.style ? props.style : null)
       }}
     >
       {
@@ -51,7 +55,9 @@ export const OptionCard = props => {
             margin: mS(5)
           }}
         >
-          <Text style={{ color: COLORS.black, fontSize: mS(18) }}>
+          <Text
+            style={{ color: COLORS.blue, fontSize: mS(18), fontWeight: "500" }}
+          >
             {props.item}
           </Text>
         </View>

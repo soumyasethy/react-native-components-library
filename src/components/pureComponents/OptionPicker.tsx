@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { COLORS } from "../../utils/Colors";
 import { OptionCard } from "../pureComponents/OptionCard";
-import { mS } from "../../widgets/ResponsiveScreen";
+import { mS, screenHeight, screenWidth } from "../../widgets/ResponsiveScreen";
+import { AnswereStatusCard } from "./AnswereStatusCard";
 
 export const OptionPicker = props => {
   const [selected, setSelected] = useState([]);
@@ -33,24 +34,15 @@ export const OptionPicker = props => {
   if (!!props.options) {
     return (
       <>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: mS(16 * 2)
-          }}
-        >
-          <Text style={{ color: COLORS.grey777 }}>
-            {selected.length > 0 ? "Answered" : "Unanswered"}
-          </Text>
-          <Text style={{ color: COLORS.grey777 }}>
-            Selected: {selected.length}/{props.options.length}
-          </Text>
-        </View>
+        <AnswereStatusCard
+          selected={selected}
+          options={props.options}
+          selectLimit={props.selectLimit}
+        />
         <ScrollView
           alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={true}
-          pagingEnabled={false}
+          showsVerticalScrollIndicator={false}
+          pagingEnabled={true}
           overScrollMode={"always"}
           contentContainerStyle={{ flexGrow: 1 }}
         >
@@ -59,7 +51,9 @@ export const OptionPicker = props => {
               flexGrow: 1,
               flexDirection: "column",
               flexWrap: "wrap",
-              alignItems: "flex-start"
+              alignItems: "flex-start",
+              // backgroundColor: "red"
+              // justifyContent: "flex-start"
             }}
           >
             {props.options.map((item, index) => {
@@ -72,6 +66,12 @@ export const OptionPicker = props => {
                 />
               );
             })}
+            <View
+              style={{
+                height: mS(screenHeight * 0.1),
+                width: screenWidth
+              }}
+            ></View>
           </View>
         </ScrollView>
       </>
