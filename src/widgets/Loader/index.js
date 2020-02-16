@@ -1,6 +1,6 @@
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {COLORS} from '../../utils/Colors/Colors';
+import {COLORS} from '../../utils/Colors';
 
 export const Loader = props => (
   <View

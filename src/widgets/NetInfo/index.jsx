@@ -2,7 +2,7 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useState } from "react";
-import { COLORS } from "../../utils/Colors/Colors";
+import { COLORS } from "../../utils/Colors";
 import CustomText from "../../components/pureComponents/Text";
 export const isNetworkConnected = () => {
   const netInfo = useNetInfo();

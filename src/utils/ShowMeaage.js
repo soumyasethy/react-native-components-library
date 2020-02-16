@@ -1,5 +1,5 @@
 import Snackbar from 'react-native-snackbar';
-import {COLORS} from './Colors/Colors';
+import {COLORS} from './Colors';
 
 export const ShowMessage = (message, success) => {
   Snackbar.show({

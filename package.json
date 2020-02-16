@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watcher-add": "wml add ~/Desktop/Licious/licious-component-library-rn/ ~/Desktop/Licious/licious-storybook-rn/node_modules/licious-component-library/",
+    "watcher-add": "wml add ~/Desktop/Soumya/BaseProject-Comp-Lib/component-library/ ~/Desktop/Soumya/BaseProject-Comp-Lib/BaseProject/node_modules/component-library/",
     "watch-start": "wml start",
     "watch-stop": "wml rm-all",
     "watch-single": "wml rm 0",
