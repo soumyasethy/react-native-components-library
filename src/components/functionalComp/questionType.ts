@@ -1,8 +1,8 @@
 export const questionType = {
-  inputType: "inputType",
+  inputType: "textInput",
   singleChoice: "singleChoice",
   multiChoice: "multiChoice",
-  gps: "gps",
-  picture: "picture",
+  gps: "mapPicker",
+  picture: "cameraPicker",
   range: "range"
 };

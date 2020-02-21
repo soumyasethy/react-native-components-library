@@ -3,7 +3,7 @@ import MapView, { Callout, Marker } from "react-native-maps";
 import { StyleSheet, View, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 import { mS, screenHeight, screenWidth } from "../../widgets/ResponsiveScreen";
-import { OptionCard } from "./OptionCard";
+import { ButtonCard } from "./ButtonCard";
 import { shadow } from "../../utils/Shadow";
 import { COLORS } from "../index";
 import Geolocation from "react-native-geolocation-service";
@@ -130,9 +130,9 @@ export const MapCard = () => {
           title={"Area"}
           subTitle={"Bellandure, Bangalore, Karnataka, India"}
         />
-        <OptionCard
+        <ButtonCard
           style={{ justifyContent: "center", alignItems: "center" }}
-          item={"Refresh"}
+          item={{ text: "Refresh" }}
           addToSelected={async () => {
             console.warn("clicked");
             requestGPSPermission(setLocation);
@@ -149,7 +149,7 @@ MapCard.propTypes = {};
 
 const styles = StyleSheet.create({
   map: {
-    height: screenWidth * 0.7
+    height: screenWidth * 0.8
   }
 });
 const SmallCardWithTitleSubTitle = props => {

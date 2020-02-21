@@ -1,53 +1,37 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { View, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import {
-  OptionPicker,
-  CompletedStatusCard,
+  SingleMultipleChoiceCard,
   MapCard,
-  questionType
+  questionType,
+  CameraCard,
+  AppContainer
 } from "../index";
-import { mS, screenHeight, screenWidth } from "../../widgets/ResponsiveScreen";
-import PrevNextComponent from "./PrevNextComponent";
+import { mS } from "../../widgets/ResponsiveScreen";
 import QuestionComponent from "./QuestionComponent";
-
-class DynamicQuestionCard extends Component {
+import { TextInputCard } from "./TextInputCard";
+class DynamicQuestionCard extends PureComponent {
   render() {
     return (
-      <View style={style.container}>
-        <CompletedStatusCard selected={2} count={6} />
-        <QuestionComponent
-          question={this.props.question}
-          isMandatory={!!this.props.isMandatory}
-        />
-
+      <>
+        <QuestionComponent {...this.props} />
         {this.renderOption()}
-        <PrevNextComponent />
-      </View>
+      </>
     );
   }
   renderOption = () => {
     switch (this.props.type) {
       case questionType.singleChoice:
-        return (
-          <OptionPicker
-            options={this.props.options}
-            selectLimit={this.props.selectLimit}
-            onSelect={this.props.onSelect}
-            selected={this.props.selected}
-          />
-        );
+        return <SingleMultipleChoiceCard {...this.props} />;
       case questionType.multiChoice:
-        return (
-          <OptionPicker
-            options={this.props.options}
-            selectLimit={this.props.selectLimit}
-            onSelect={this.props.onSelect}
-            selected={this.props.selected}
-          />
-        );
+        return <SingleMultipleChoiceCard {...this.props} />;
       case questionType.gps:
         return <MapCard />;
+      case questionType.picture:
+        return <CameraCard />;
+      case questionType.inputType:
+        return <TextInputCard />;
       default:
     }
   };
@@ -55,9 +39,9 @@ class DynamicQuestionCard extends Component {
 
 DynamicQuestionCard.propTypes = {
   question: PropTypes.string.isRequired,
-  isMandatory: PropTypes.boolean,
+  isMandatory: PropTypes.bool,
   selectLimit: PropTypes.number,
-  onSelect: PropTypes.functions,
+  onSelect: PropTypes.func,
   selected: PropTypes.array.isRequired,
   options: PropTypes.array.isRequired
 };

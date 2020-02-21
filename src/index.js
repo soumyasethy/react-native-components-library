@@ -5,12 +5,17 @@ import { noShadow } from "./utils/NoShadow.js";
 import { mS, s, mVs } from "./widgets/ResponsiveScreen";
 import {
   Questions,
-  OptionCard,
-  OptionPicker,
+  ButtonCard,
+  SingleMultipleChoiceCard,
   DynamicQuestionCard,
-  MapCard
+  MapCard,
+  CameraCard,
+  FullScreenSpinnerHOC,
+  TakeSurveyCard,
+  SurveyCard,
+  InputComponent
 } from "./components";
-import { AppContainer } from "./components/hoc/AppContainer";
+import { AppContainer } from "./components/hoc";
 import { questionType } from "./components/functionalComp/";
 import Swiper from "react-native-swiper";
 
@@ -22,11 +27,16 @@ export {
   noShadow,
   COLORS,
   Questions,
-  OptionCard,
-  OptionPicker,
+  ButtonCard,
+  SingleMultipleChoiceCard,
   DynamicQuestionCard,
   MapCard,
   questionType,
   AppContainer,
-  Swiper
+  Swiper,
+  CameraCard,
+  FullScreenSpinnerHOC,
+  TakeSurveyCard,
+  SurveyCard,
+  InputComponent
 };

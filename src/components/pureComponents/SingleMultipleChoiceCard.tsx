@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { COLORS } from "../../utils/Colors";
-import { OptionCard } from "../pureComponents/OptionCard";
+import { ButtonCard } from "./ButtonCard";
 import { mS, screenHeight, screenWidth } from "../../widgets/ResponsiveScreen";
 import { AnswereStatusCard } from "./AnswereStatusCard";
 
-export const OptionPicker = props => {
+export const SingleMultipleChoiceCard = props => {
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
@@ -21,8 +21,15 @@ export const OptionPicker = props => {
 
   const addToSelected = item => {
     let limitCheck = checkLimit(selected, props.selectLimit);
-
     let ifExists = find(selected, item);
+    if (props.selectLimit === 1 && !limitCheck && !ifExists) {
+      setSelected([item]);
+      return;
+    }
+    if (props.selectLimit === 1 && !limitCheck && !!ifExists) {
+      setSelected([]);
+      return;
+    }
     if (limitCheck && !ifExists) {
       setSelected([...selected, item]);
     } else {
@@ -33,7 +40,7 @@ export const OptionPicker = props => {
 
   if (!!props.options) {
     return (
-      <>
+      <View style={{ width: "100%", height: "100%" }}>
         <AnswereStatusCard
           selected={selected}
           options={props.options}
@@ -41,25 +48,25 @@ export const OptionPicker = props => {
         />
         <ScrollView
           alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           pagingEnabled={true}
           overScrollMode={"always"}
           contentContainerStyle={{ flexGrow: 1 }}
+          style={{ flex: 1 }}
         >
           <View
             style={{
               flexGrow: 1,
+              padding: 10,
               flexDirection: "column",
               flexWrap: "wrap",
-              alignItems: "flex-start",
-              // backgroundColor: "red"
-              // justifyContent: "flex-start"
+              alignItems: "flex-start"
             }}
           >
             {props.options.map((item, index) => {
               let ifExists = find(selected, item);
               return (
-                <OptionCard
+                <ButtonCard
                   item={item}
                   addToSelected={addToSelected}
                   isSelected={!!ifExists}
@@ -68,19 +75,19 @@ export const OptionPicker = props => {
             })}
             <View
               style={{
-                height: mS(screenHeight * 0.1),
-                width: screenWidth
+                height: mS(screenHeight * 0.1)
+                // width: "100%"
               }}
             ></View>
           </View>
         </ScrollView>
-      </>
+      </View>
     );
   }
 };
 const find = (arr, searchItem) => {
   return arr.find((item, index) => {
-    return item === searchItem;
+    return Object.is(item, searchItem);
   });
 };
 const checkLimit = (arr, limit) => {

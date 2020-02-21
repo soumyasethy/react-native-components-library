@@ -3,8 +3,9 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../../utils/Colors";
 import { shadow } from "../../utils/Shadow";
 import { mS } from "../../widgets/ResponsiveScreen";
+import { BorderRadiusStyle } from "../../utils/BorderRadiusStyle";
 
-export const OptionCard = props => {
+export const ButtonCard = props => {
   return props.isSelected ? (
     <TouchableOpacity
       activeOpacity={1}
@@ -29,7 +30,7 @@ export const OptionCard = props => {
           <Text
             style={{ color: COLORS.white, fontSize: mS(18), fontWeight: "500" }}
           >
-            {props.item}
+            {props.item.text}
           </Text>
         </View>
       }
@@ -42,9 +43,7 @@ export const OptionCard = props => {
         padding: mS(10),
         backgroundColor: COLORS.white,
         marginTop: mS(16),
-        borderRadius: mS(5),
-        borderColor: COLORS.blue,
-        borderWidth: mS(0.5),
+        ...BorderRadiusStyle,
         ...shadow,
         ...(props.style ? props.style : null)
       }}
@@ -58,7 +57,7 @@ export const OptionCard = props => {
           <Text
             style={{ color: COLORS.blue, fontSize: mS(18), fontWeight: "500" }}
           >
-            {props.item}
+            {props.item.text}
           </Text>
         </View>
       }
