@@ -4,7 +4,6 @@ import { CompletedStatusCard } from "../pureComponents";
 import PrevNextComponent from "../pureComponents/PrevNextComponent";
 import { mS } from "../../widgets/ResponsiveScreen";
 import { DismissKeyboardView } from "./DismissKeyboardHOC";
-
 const AppContainer = () => {
   return ({ children, ...props }) => {
     const onNext = () => {
@@ -20,7 +19,9 @@ const AppContainer = () => {
     const onSubmit = () => {
       console.warn("submit...");
     };
-
+    const onExit = () => {
+      _goBack();
+    };
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <CompletedStatusCard
@@ -34,6 +35,8 @@ const AppContainer = () => {
           onPrev={onPrev}
           onSubmit={onSubmit}
           showSubmit={props.currentIndex + 1 === props.totalCount}
+          onExit={onExit}
+          showExit={true}
         />
       </SafeAreaView>
     );

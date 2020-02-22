@@ -6,6 +6,7 @@ import { View } from "react-native";
 
 class PrevNextComponent extends Component {
   render() {
+    console.warn("showExit", this.props.showExit);
     if (this.props.showSubmit) {
       return (
         <View
@@ -25,7 +26,19 @@ class PrevNextComponent extends Component {
             style={{
               justifyContent: "center",
               alignItems: "center",
-              width: "100%"
+              width: screenWidth / 2 - 50
+            }}
+            item={{ text: "Prev." }}
+            addToSelected={() => {
+              this.props.onPrev();
+            }}
+            isSelected={false}
+          />
+          <ButtonCard
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: screenWidth / 2 - 50
             }}
             item={{ text: "Submit" }}
             addToSelected={() => {
@@ -56,9 +69,9 @@ class PrevNextComponent extends Component {
             alignItems: "center",
             width: screenWidth / 2 - 50
           }}
-          item={{ text: "Prev." }}
+          item={{ text: !!this.props.showExit ? "Exit Survey" : "Prev." }}
           addToSelected={() => {
-            this.props.onPrev();
+            !!this.props.showExit ? this.props.onExit() : this.props.onPrev();
           }}
           isSelected={false}
         />

@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   scrollView: {
-    marginHorizontal: mS(8),
     padding: mS(8)
   },
   text: {

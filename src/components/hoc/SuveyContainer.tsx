@@ -6,6 +6,7 @@ import { mS } from "../../widgets/ResponsiveScreen";
 
 const AppContainer = () => {
   return ({ children, ...props }) => {
+    console.warn("currentIndex->", props.currentIndex);
     const onNext = () => {
       if (props.currentIndex < props.totalCount) {
         props.setCurrentIndex(props.currentIndex + 1);
