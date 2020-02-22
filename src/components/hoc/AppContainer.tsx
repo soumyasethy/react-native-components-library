@@ -20,7 +20,7 @@ const AppContainer = () => {
       console.warn("submit...");
     };
     const onExit = () => {
-      _goBack();
+      props.onExit();
     };
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -36,7 +36,7 @@ const AppContainer = () => {
           onSubmit={onSubmit}
           showSubmit={props.currentIndex + 1 === props.totalCount}
           onExit={onExit}
-          showExit={true}
+          showExit={props.currentIndex + 1 === 1}
         />
       </SafeAreaView>
     );

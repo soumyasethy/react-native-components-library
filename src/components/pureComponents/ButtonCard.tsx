@@ -50,7 +50,7 @@ export const ButtonCard = props => {
           <Text
             style={{
               color: COLORS.white,
-              fontSize: mS(18),
+              fontSize: mS(16),
               fontWeight: "500"
             }}
           >
@@ -81,7 +81,7 @@ export const ButtonCard = props => {
           <Text
             style={{
               color: COLORS.blue,
-              fontSize: mS(18),
+              fontSize: mS(16),
               fontWeight: "500"
             }}
           >

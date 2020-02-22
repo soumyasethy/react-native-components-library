@@ -6,49 +6,6 @@ import { View } from "react-native";
 
 class PrevNextComponent extends Component {
   render() {
-    console.warn("showExit", this.props.showExit);
-    if (this.props.showSubmit) {
-      return (
-        <View
-          style={{
-            height: mS(screenHeight * 0.1),
-            width: screenWidth,
-            position: "absolute",
-            bottom: mS(16),
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingLeft: mS(16 * 2),
-            paddingRight: mS(16 * 2)
-          }}
-        >
-          <ButtonCard
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: screenWidth / 2 - 50
-            }}
-            item={{ text: "Prev." }}
-            addToSelected={() => {
-              this.props.onPrev();
-            }}
-            isSelected={false}
-          />
-          <ButtonCard
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: screenWidth / 2 - 50
-            }}
-            item={{ text: "Submit" }}
-            addToSelected={() => {
-              this.props.onSubmit();
-            }}
-            isSelected={true}
-          />
-        </View>
-      );
-    }
     return (
       <View
         style={{
@@ -81,9 +38,11 @@ class PrevNextComponent extends Component {
             alignItems: "center",
             width: screenWidth / 2 - 50
           }}
-          item={{ text: "Next" }}
+          item={{ text: !!this.props.showSubmit ? "Submit Survey" : "Next" }}
           addToSelected={() => {
-            this.props.onNext();
+            !!this.props.showSubmit
+              ? this.props.onSubmit()
+              : this.props.onNext();
           }}
           isSelected={true}
         />

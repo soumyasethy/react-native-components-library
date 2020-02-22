@@ -14,6 +14,7 @@ const TakeSurveyCard = props => {
       currentIndex={currentIndex}
       totalCount={props.data.questions.length}
       setCurrentIndex={updateIndex}
+      onExit={props.onExit}
     >
       <DynamicQuestionCard
         index={currentIndex}
