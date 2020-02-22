@@ -13,11 +13,13 @@ import {
   FullScreenSpinnerHOC,
   TakeSurveyCard,
   SurveyCard,
-  InputComponent
+  InputComponent,
+  DismissKeyboardView
 } from "./components";
 import { AppContainer } from "./components/hoc";
 import { questionType } from "./components/functionalComp/";
 import Swiper from "react-native-swiper";
+import { _storeData, _retrieveData } from "./storage";
 
 export {
   s,
@@ -38,5 +40,8 @@ export {
   FullScreenSpinnerHOC,
   TakeSurveyCard,
   SurveyCard,
-  InputComponent
+  InputComponent,
+  _storeData,
+  _retrieveData,
+  DismissKeyboardView
 };

@@ -5,11 +5,11 @@ import { BorderRadiusStyle, ButtonCard, COLORS, shadow } from "../index";
 export const SurveyCard = props => {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          {props.data.map((item, index) => {
+          {props?.data?.map((item, index) => {
             return (
               <View
                 style={{

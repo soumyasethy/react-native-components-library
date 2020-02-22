@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { TouchableOpacity, Keyboard } from "react-native";
 import PropTypes from "prop-types";
 import DynamicQuestionCard from "./DynamicQuestionCard";
 import { AppContainer, questionType } from "../index";
 
 const TakeSurveyCard = props => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const updateIndex = index => {
-    setCurrentIndex(index);
-  };
+  const updateIndex = index => setCurrentIndex(index);
 
   let question = props.data.questions[currentIndex];
   return (
@@ -23,10 +22,12 @@ const TakeSurveyCard = props => {
         question={question.question}
         options={question.options}
         onSelect={items => {
-          props.updateAnswer({ ...question, answer: items });
+          if (items && items.length > 0) {
+            props.updateAnswer({ ...question, answer: items });
+          }
         }}
         selectLimit={question.type === questionType.singleChoice ? 1 : 0}
-        selected={!question.answer ? [] : question.answer}
+        selected={!question.answer ? null : question.answer}
       />
     </AppContainer>
   );

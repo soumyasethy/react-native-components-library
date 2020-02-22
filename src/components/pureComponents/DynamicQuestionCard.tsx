@@ -27,11 +27,11 @@ class DynamicQuestionCard extends PureComponent {
       case questionType.multiChoice:
         return <SingleMultipleChoiceCard {...this.props} />;
       case questionType.gps:
-        return <MapCard />;
+        return <MapCard {...this.props} />;
       case questionType.picture:
-        return <CameraCard />;
+        return <CameraCard {...this.props} />;
       case questionType.inputType:
-        return <TextInputCard />;
+        return <TextInputCard {...this.props} />;
       default:
     }
   };

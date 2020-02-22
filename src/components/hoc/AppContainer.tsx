@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text } from "react-native";
 import { CompletedStatusCard } from "../pureComponents";
 import PrevNextComponent from "../pureComponents/PrevNextComponent";
 import { mS } from "../../widgets/ResponsiveScreen";
+import { DismissKeyboardView } from "./DismissKeyboardHOC";
 
 const AppContainer = () => {
   return ({ children, ...props }) => {
