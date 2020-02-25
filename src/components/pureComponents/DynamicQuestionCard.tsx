@@ -1,14 +1,11 @@
 import React, { PureComponent } from "react";
-import { View, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import {
   SingleMultipleChoiceCard,
   MapCard,
   questionType,
-  CameraCard,
-  AppContainer
+  CameraCard
 } from "../index";
-import { mS } from "../../widgets/ResponsiveScreen";
 import QuestionComponent from "./QuestionComponent";
 import { TextInputCard } from "./TextInputCard";
 class DynamicQuestionCard extends PureComponent {
@@ -42,15 +39,8 @@ DynamicQuestionCard.propTypes = {
   isMandatory: PropTypes.bool,
   selectLimit: PropTypes.number,
   onSelect: PropTypes.func,
-  selected: PropTypes.array.isRequired,
+  // selected: PropTypes.array,
   options: PropTypes.array.isRequired
 };
 
 export default DynamicQuestionCard;
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: mS(16)
-  }
-});

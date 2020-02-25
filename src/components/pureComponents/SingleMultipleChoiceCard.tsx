@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text } from "react-native";
-import { COLORS } from "../../utils/Colors";
+import { ScrollView, View } from "react-native";
 import { ButtonCard } from "./ButtonCard";
-import { mS, screenHeight, screenWidth } from "../../widgets/ResponsiveScreen";
+import { mS, screenHeight } from "../../widgets/ResponsiveScreen";
 import { AnswereStatusCard } from "./AnswereStatusCard";
 
 export const SingleMultipleChoiceCard = props => {
@@ -15,9 +14,8 @@ export const SingleMultipleChoiceCard = props => {
   }, []);
 
   useEffect(() => {
-    //Updated Selected List->
     props.onSelect(selected);
-  }, [props.selected, selected, props.options]);
+  }, [selected, props.options]);
 
   const addToSelected = item => {
     let limitCheck = checkLimit(selected, props.selectLimit);
@@ -87,7 +85,7 @@ export const SingleMultipleChoiceCard = props => {
 };
 const find = (arr, searchItem) => {
   return arr.find((item, index) => {
-    return Object.is(item, searchItem);
+    return item.value === searchItem.value;
   });
 };
 const checkLimit = (arr, limit) => {

@@ -1,43 +1,31 @@
 import React, { useState, useEffect } from "react";
 import ImagePicker from "react-native-image-picker";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator
-} from "react-native";
+import { View, Text, Image, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
 import { COLORS, ButtonCard } from "../index";
 import { mS, mVs, s, screenWidth } from "../../widgets/ResponsiveScreen";
 import { shadow } from "../../utils/Shadow";
-import { BorderRadiusStyle } from "../../utils/BorderRadiusStyle";
 import { AnswereStatusCard } from "../pureComponents/AnswereStatusCard";
-let dataStructure = {
-  // filepath: {
-  //   data: "",
-  //   uri: ""
-  // },
-  fileData: ""
-  // fileUri: ""
-};
 
-export const CameraCard = () => {
+export const CameraCard = props => {
+  console.warn("Camera props", props);
   const [isLoading, toggleLoader] = useState(false);
-  const [imageProps, setImageProps] = useState(dataStructure);
+  const [imageProps, setImageProps] = useState("");
+  useEffect(() => {
+    updateImage(props.selected);
+  }, []);
 
   const toggleLoaderX = () => {
-    console.warn("loader->", !isLoading);
     toggleLoader(!isLoading);
   };
   const updateImage = imageProps => {
-    console.warn("updating..");
+    if (!updateImage) return;
     setImageProps(imageProps);
   };
-  useEffect(() => {
-    // console.warn("imageProps->", imageProps);
-  }, [imageProps, isLoading]);
 
+  useEffect(() => {
+    props.onSelect(imageProps);
+  }, [imageProps]);
   return (
     <>
       <AnswereStatusCard
@@ -73,18 +61,21 @@ export const CameraCard = () => {
           {isLoading ? (
             <ActivityIndicator size="large" color={COLORS.blue} />
           ) : (
-            <Image
-              // source={{ uri: imageProps.fileUri }}
-              source={{
-                uri: "data:image/jpeg;base64," + imageProps.fileData
-              }}
+            <Text>{JSON.stringify(imageProps)}</Text>
+            /*<Image
+              source={{ uri: imageProps }}
+              // source={{
+              //   uri: "data:image/jpeg;base64," + imageProps.fileData
+              // }}
               style={{ height: screenWidth, width: "100%" }}
-            />
+            />*/
           )}
         </View>
         <ButtonCard
           style={{ justifyContent: "center", alignItems: "center" }}
-          item={{ text: "Capture" }}
+          item={{
+            text: imageProps ? "Update Picture" : "Add Picture"
+          }}
           addToSelected={async () => {
             chooseImage(updateImage, toggleLoaderX);
           }}
@@ -94,16 +85,11 @@ export const CameraCard = () => {
     </>
   );
 };
-const runOnNewThread = (fun, delay) => {
-  setTimeout(() => {
-    fun();
-  }, delay || 250);
-};
 
 const chooseImage = (callback, toggleLoader) => {
-  if (toggleLoader) runOnNewThread(toggleLoader, 0);
+  // if (toggleLoader) runOnNewThread(toggleLoader, 0);
   let options = {
-    title: "Select Image",
+    title: "Choose your option",
     customButtons: [
       // { name: "customOptionKey", title: "Choose Photo from Custom Option" }
     ],
@@ -116,8 +102,6 @@ const chooseImage = (callback, toggleLoader) => {
     console.warn("Response = ", response);
 
     if (response.didCancel) {
-      toggleLoader();
-      // runOnNewThread(toggleLoader, 500);
       console.warn("User cancelled image picker");
     } else if (response.error) {
       console.warn("ImagePicker Error: ", response.error);
@@ -130,17 +114,17 @@ const chooseImage = (callback, toggleLoader) => {
       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
       // alert(JSON.stringify(response));
       //console.warn("response", JSON.stringify(response));
-
+      toggleLoader();
       callback({
         //filePath: response,
-        fileData: response.data
-        //fileUri: response.uri
+        // fileData: response.data
+        fileUri: response.uri
       });
     }
   });
 };
 
-const launchCamera = callback => {
+/*const launchCamera = callback => {
   let options = {
     storageOptions: {
       skipBackup: true,
@@ -195,6 +179,6 @@ const launchImageLibrary = callback => {
       });
     }
   });
-};
+};*/
 
 CameraCard.propTypes = {};

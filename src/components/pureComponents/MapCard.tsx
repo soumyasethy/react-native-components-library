@@ -24,18 +24,48 @@ const SAMPLE_REGION = {
   longitudeDelta: LONGITUDE_DELTA
 };
 
-export const MapCard = () => {
+export const MapCard = props => {
   const [currentLocation, setLocation] = useState({});
 
-  useEffect(() => {
-    requestGPSPermission(setLocation);
+  useEffect(async () => {
+    if (props && !props.selected) {
+      await requestGPSPermission(setLocation);
+      return;
+    }
+    let latitude = 0.0;
+    longitude = 0.0;
+    accuracy = 0;
+    props.selected.map(item => {
+      if (item.text === "latitude") {
+        latitude = item.value;
+      }
+      if (item.text === "longitude") {
+        longitude = item.value;
+      }
+      if (item.text === "accuracy") {
+        accuracy = item.value;
+      }
+    });
+    setLocation({ coords: { latitude, longitude, accuracy } });
   }, []);
-  const onRegionChange = region => {
-    console.warn("region->", region);
-  };
+
+  useEffect(() => {
+    if (!currentLocation?.coords) return;
+    let locationAnswer = [
+      { text: "latitude", value: currentLocation.coords.latitude },
+      { text: "longitude", value: currentLocation.coords.longitude },
+      { text: "accuracy", value: currentLocation.coords.accuracy }
+    ];
+    props.onSelect(locationAnswer);
+  }, [currentLocation]);
+
+  // const onRegionChange = region => {
+  //   console.warn("region->", region);
+  // };
 
   let { latitude, longitude, accuracy } =
     !!currentLocation.coords && currentLocation.coords;
+
   const getMapRegion = () => ({
     latitude: latitude,
     longitude: longitude,
@@ -132,10 +162,15 @@ export const MapCard = () => {
         />
         <ButtonCard
           style={{ justifyContent: "center", alignItems: "center" }}
-          item={{ text: "Refresh" }}
+          item={{
+            text:
+              props.selected && props.selected.length >= 0
+                ? "Update Location"
+                : "Tag Location"
+          }}
           addToSelected={async () => {
             console.warn("clicked");
-            requestGPSPermission(setLocation);
+            await requestGPSPermission(setLocation);
             // console.warn("position->", position);
           }}
           isSelected={false}
@@ -161,6 +196,7 @@ const SmallCardWithTitleSubTitle = props => {
   );
 };
 const getLocation = callBack => {
+  console.warn("Getting Location");
   Geolocation.getCurrentPosition(
     position => {
       // console.warn("Location->", position);
@@ -177,7 +213,7 @@ const getLocation = callBack => {
 
 const requestGPSPermission = async callBack => {
   if (Platform.OS === "ios") {
-    return await getLocation(callBack);
+    return getLocation(callBack);
   }
   try {
     const granted = await PermissionsAndroid.request(
