@@ -23,6 +23,7 @@ const TakeSurveyCard = props => {
       setCurrentIndex={updateIndex}
       onExit={props.onExit}
       onSubmit={props.onSubmit}
+      editingDisabled={props.editingDisabled}
     >
       <DynamicQuestionCard
         index={currentIndex}

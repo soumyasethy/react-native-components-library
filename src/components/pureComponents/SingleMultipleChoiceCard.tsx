@@ -14,6 +14,7 @@ export const SingleMultipleChoiceCard = props => {
   }, []);
 
   useEffect(() => {
+    console.warn("selected->", selected);
     props.onSelect(selected);
   }, [selected, props.options]);
 

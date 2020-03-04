@@ -12,7 +12,7 @@ class PrevNextComponent extends Component {
           height: mS(screenHeight * 0.1),
           width: screenWidth,
           position: "absolute",
-          bottom: mS(16),
+          bottom: mS(0),
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",

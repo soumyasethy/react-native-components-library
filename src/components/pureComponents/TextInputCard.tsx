@@ -16,9 +16,9 @@ export const TextInputCard = props => {
     props.onSelect(changeText);
   };
 
-  useEffect(() => {
-    fieldRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   fieldRef.current.focus();
+  // }, []);
 
   return (
     <View style={{ width: "100%" }}>
@@ -30,16 +30,16 @@ export const TextInputCard = props => {
       <View
         style={{
           marginTop: mS(16),
-          padding: mS(16),
+          padding: mS(8),
           backgroundColor: COLORS.white,
           ...shadow
         }}
       >
         <OutlinedTextField
           label={"Answer"}
-          value={text}
+          value={text.trim()}
           onChangeText={onChangeText}
-          multiline={false}
+          multiline={true}
           onSubmitEditing={Keyboard.dismiss}
           fontSize={22}
           ref={fieldRef}

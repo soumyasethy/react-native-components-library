@@ -1,7 +1,7 @@
 import { COLORS } from "./Colors";
 
 export const shadow = {
-  shadowColor: COLORS.grey777,
+  shadowColor: COLORS.blue,
   shadowOffset: {
     width: 0,
     height: 2

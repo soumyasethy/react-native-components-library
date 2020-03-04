@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { StyleSheet, View, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 import { mS, screenHeight, screenWidth } from "../../widgets/ResponsiveScreen";
@@ -26,10 +26,11 @@ const SAMPLE_REGION = {
 
 export const MapCard = props => {
   const [currentLocation, setLocation] = useState({});
+  const mapView = React.createRef();
 
-  useEffect(async () => {
-    if (props && !props.selected) {
-      await requestGPSPermission(setLocation);
+  useEffect(() => {
+    if (props && !props?.selected) {
+      requestGPSPermission(setLocation);
       return;
     }
     let latitude = 0.0;
@@ -46,32 +47,43 @@ export const MapCard = props => {
         accuracy = item.value;
       }
     });
-    setLocation({ coords: { latitude, longitude, accuracy } });
+
+    if (latitude && longitude && accuracy) {
+      setLocation({ coords: { latitude, longitude, accuracy } });
+      // mapView.animateToRegion(
+      //   { latitude, longitude, LATITUDE_DELTA, LONGITUDE_DELTA },
+      //   1000
+      // );
+    }
   }, []);
 
   useEffect(() => {
     if (!currentLocation?.coords) return;
-    let locationAnswer = [
-      { text: "latitude", value: currentLocation.coords.latitude },
-      { text: "longitude", value: currentLocation.coords.longitude },
-      { text: "accuracy", value: currentLocation.coords.accuracy }
-    ];
-    props.onSelect(locationAnswer);
+    let { latitude, longitude, accuracy } =
+      !!currentLocation.coords && currentLocation.coords;
+    if (latitude && longitude && accuracy) {
+      let locationAnswer = [
+        { text: "latitude", value: latitude },
+        { text: "longitude", value: longitude },
+        { text: "accuracy", value: accuracy }
+      ];
+      props.onSelect(locationAnswer);
+      // mapView.animateToRegion(
+      //   { latitude, longitude, LATITUDE_DELTA, LONGITUDE_DELTA },
+      //   1000
+      // );
+    }
   }, [currentLocation]);
-
-  // const onRegionChange = region => {
-  //   console.warn("region->", region);
-  // };
 
   let { latitude, longitude, accuracy } =
     !!currentLocation.coords && currentLocation.coords;
 
-  const getMapRegion = () => ({
-    latitude: latitude,
-    longitude: longitude,
+  const getMapRegion = {
+    latitude: latitude || SAMPLE_REGION.latitude,
+    longitude: longitude || SAMPLE_REGION.longitude,
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA
-  });
+  };
   return (
     <>
       <AnswereStatusCard
@@ -88,26 +100,28 @@ export const MapCard = props => {
             borderColor: COLORS.blue,
             marginTop: mS(16),
             width: "100%"
-          },
-          shadow
+            // ...shadow
+          }
         ]}
       >
         <MapView
-          liteMode
+          // provider={PROVIDER_GOOGLE}
+          ref={mapView}
+          // liteMode
           key={`map_`}
           style={styles.map}
-          customMapStyle={customStyle}
+          // customMapStyle={customStyle}
           loadingEnabled={true}
           loadingIndicatorColor="#666666"
           loadingBackgroundColor="#eeeeee"
           // onRegionChange={onRegionChange}
           initialRegion={{
-            latitude: latitude || 0.0,
-            longitude: longitude || 0.0,
+            latitude: latitude || SAMPLE_REGION.latitude,
+            longitude: longitude || SAMPLE_REGION.longitude,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA
           }}
-          region={getMapRegion()}
+          region={getMapRegion}
         >
           <Marker
             coordinate={{
@@ -124,8 +138,7 @@ export const MapCard = props => {
                 paddingVertical: 10,
                 borderRadius: 5,
                 justifyContent: "center",
-                alignItems: "center",
-                ...shadow
+                alignItems: "center"
               }}
             >
               <Text style={{ color: COLORS.white, fontWeight: "700" }}>
@@ -184,7 +197,7 @@ MapCard.propTypes = {};
 
 const styles = StyleSheet.create({
   map: {
-    height: screenWidth * 0.8
+    height: screenWidth * 0.7
   }
 });
 const SmallCardWithTitleSubTitle = props => {
@@ -199,7 +212,7 @@ const getLocation = callBack => {
   console.warn("Getting Location");
   Geolocation.getCurrentPosition(
     position => {
-      // console.warn("Location->", position);
+      console.warn("Location->", position);
       callBack(position);
     },
     error => {

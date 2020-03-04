@@ -6,11 +6,12 @@ import { COLORS, ButtonCard } from "../index";
 import { mS, mVs, s, screenWidth } from "../../widgets/ResponsiveScreen";
 import { shadow } from "../../utils/Shadow";
 import { AnswereStatusCard } from "../pureComponents/AnswereStatusCard";
+import { PermissionsAndroid } from "react-native";
 
 export const CameraCard = props => {
-  console.warn("Camera props", props);
+  // console.warn("Camera props", props);
   const [isLoading, toggleLoader] = useState(false);
-  const [imageProps, setImageProps] = useState("");
+  const [imageProps, setImageProps] = useState({ uri: "", path: "" });
   useEffect(() => {
     updateImage(props.selected);
   }, []);
@@ -19,13 +20,16 @@ export const CameraCard = props => {
     toggleLoader(!isLoading);
   };
   const updateImage = imageProps => {
+    console.warn("Updated Image->", imageProps);
     if (!updateImage) return;
     setImageProps(imageProps);
   };
 
-  useEffect(() => {
-    props.onSelect(imageProps);
-  }, [imageProps]);
+  // useEffect(() => {
+  //   props.onSelect(imageProps);
+  // }, [imageProps]);
+
+  console.warn("imageProps?.uri", imageProps?.uri);
   return (
     <>
       <AnswereStatusCard
@@ -50,7 +54,7 @@ export const CameraCard = props => {
           style={{
             backgroundColor: COLORS.white,
             // padding: mS(16),
-            height: screenWidth,
+            height: screenWidth * 0.7,
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
@@ -60,24 +64,21 @@ export const CameraCard = props => {
         >
           {isLoading ? (
             <ActivityIndicator size="large" color={COLORS.blue} />
-          ) : (
-            <Text>{JSON.stringify(imageProps)}</Text>
-            /*<Image
-              source={{ uri: imageProps }}
-              // source={{
-              //   uri: "data:image/jpeg;base64," + imageProps.fileData
-              // }}
+          ) : imageProps?.data ? (
+            <Image
+              // source={{ uri: "data:image/jpeg;base64," + imageProps.data }}
+              source={{ uri: imageProps.uri }}
               style={{ height: screenWidth, width: "100%" }}
-            />*/
-          )}
+            />
+          ) : null}
         </View>
         <ButtonCard
           style={{ justifyContent: "center", alignItems: "center" }}
           item={{
             text: imageProps ? "Update Picture" : "Add Picture"
           }}
-          addToSelected={async () => {
-            chooseImage(updateImage, toggleLoaderX);
+          addToSelected={() => {
+            requestCameraPermission(updateImage, toggleLoaderX);
           }}
           isSelected={false}
         />
@@ -85,8 +86,32 @@ export const CameraCard = props => {
     </>
   );
 };
-
-const chooseImage = (callback, toggleLoader) => {
+const requestCameraPermission = async (updateImage, toggleLoaderX) => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        title: "Cool Photo App Camera Permission",
+        message:
+          "Cool Photo App needs access to your camera " +
+          "so you can take awesome pictures.",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.warn("You can use the camera");
+      chooseImage(updateImage, toggleLoaderX);
+    } else {
+      console.warn("Camera permission denied");
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
+const chooseImage = async (updateImage, toggleLoader) => {
   // if (toggleLoader) runOnNewThread(toggleLoader, 0);
   let options = {
     title: "Choose your option",
@@ -99,8 +124,7 @@ const chooseImage = (callback, toggleLoader) => {
     }
   };
   ImagePicker.showImagePicker(options, response => {
-    console.warn("Response = ", response);
-
+    // console.warn("Response = ", response);
     if (response.didCancel) {
       console.warn("User cancelled image picker");
     } else if (response.error) {
@@ -109,76 +133,50 @@ const chooseImage = (callback, toggleLoader) => {
       console.warn("User tapped custom button: ", response.customButton);
       alert(response.customButton);
     } else {
-      //const source = { uri: response.uri };
       // You can also display the image using data:
       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-      // alert(JSON.stringify(response));
-      //console.warn("response", JSON.stringify(response));
+      //const source = { uri: response.uri };
       toggleLoader();
-      callback({
-        //filePath: response,
-        // fileData: response.data
-        fileUri: response.uri
+      updateImage({
+        data: response.data,
+        path: response.path,
+        uri: response.uri
       });
     }
   });
 };
-
-/*const launchCamera = callback => {
-  let options = {
-    storageOptions: {
-      skipBackup: true,
-      path: "images"
-    }
-  };
-  ImagePicker.launchCamera(options, response => {
-    console.warn("Response = ", response);
-
-    if (response.didCancel) {
-      console.warn("User cancelled image picker");
-    } else if (response.error) {
-      console.warn("ImagePicker Error: ", response.error);
-    } else if (response.customButton) {
-      console.warn("User tapped custom button: ", response.customButton);
-      alert(response.customButton);
-    } else {
-      // const source = { uri: response.uri };
-      // console.warn("response", JSON.stringify(response));
-      callback({
-        filePath: response,
-        fileData: response.data,
-        fileUri: response.uri
-      });
-    }
-  });
-};
-const launchImageLibrary = callback => {
-  let options = {
-    storageOptions: {
-      skipBackup: true,
-      path: "images"
-    }
-  };
-  ImagePicker.launchImageLibrary(options, response => {
-    console.warn("Response = ", response);
-
-    if (response.didCancel) {
-      console.warn("User cancelled image picker");
-    } else if (response.error) {
-      console.warn("ImagePicker Error: ", response.error);
-    } else if (response.customButton) {
-      console.warn("User tapped custom button: ", response.customButton);
-      alert(response.customButton);
-    } else {
-      // const source = { uri: response.uri };
-      // console.warn("response", JSON.stringify(response));
-      callback({
-        filePath: response,
-        fileData: response.data,
-        fileUri: response.uri
-      });
-    }
-  });
-};*/
 
 CameraCard.propTypes = {};
+
+//edit user profile
+/*export const editUserProfile = (
+  sessionId,
+  firstName,
+  lastName,
+  image,
+  countryCode,
+  phone
+) =>
+  new Promise((resolve, reject) => {
+    var data = new FormData();
+    data.append("session_id", sessionId);
+    data.append("firstname", firstName);
+    data.append("lastname", lastName);
+    data.append("image", {
+      uri: image,
+      name: "userProfile.jpg",
+      type: "image/jpg"
+    });
+    data.append("country_code", countryCode);
+    data.append("phone", phone);
+    data.append("locale", "en");
+
+    return axios
+      .post(base_url + "edit-profile", data)
+      .then(response => {
+        resolve(response);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });*/

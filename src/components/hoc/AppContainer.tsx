@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView, View, Text } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { CompletedStatusCard } from "../pureComponents";
 import PrevNextComponent from "../pureComponents/PrevNextComponent";
 import { mS } from "../../widgets/ResponsiveScreen";
+import { COLORS } from "../index";
 const AppContainer = () => {
   return ({ children, ...props }) => {
     const onNext = () => {
@@ -19,12 +20,21 @@ const AppContainer = () => {
       props.onExit();
     };
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
         <CompletedStatusCard
           selected={props.currentIndex + 1}
           count={props.totalCount}
         />
-        <View style={{ flex: 1, paddingHorizontal: mS(16) }}>{children}</View>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: COLORS.white,
+            padding: mS(16)
+          }}
+          pointerEvents={props.editingDisabled ? "none" : "auto"}
+        >
+          {children}
+        </View>
 
         <PrevNextComponent
           onNext={onNext}
@@ -34,7 +44,7 @@ const AppContainer = () => {
           onExit={onExit}
           showExit={props.currentIndex + 1 === 1}
         />
-      </SafeAreaView>
+      </View>
     );
   };
 };
