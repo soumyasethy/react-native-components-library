@@ -38,7 +38,13 @@ class PrevNextComponent extends Component {
             alignItems: "center",
             width: screenWidth / 2 - 50
           }}
-          item={{ text: !!this.props.showSubmit ? "Submit Survey" : "Next" }}
+          item={{
+            text: !!this.props.showSubmit
+              ? this.props.editingDisabled
+                ? "Close"
+                : "Submit Survey"
+              : "Next"
+          }}
           addToSelected={() => {
             !!this.props.showSubmit
               ? this.props.onSubmit()

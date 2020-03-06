@@ -43,6 +43,7 @@ const AppContainer = () => {
           showSubmit={props.currentIndex + 1 === props.totalCount}
           onExit={onExit}
           showExit={props.currentIndex + 1 === 1}
+          editingDisabled={props.editingDisabled}
         />
       </View>
     );

@@ -37,17 +37,18 @@ export const MapCard = props => {
     longitude = 0.0;
     accuracy = 0;
     props.selected.map(item => {
+      if (!item.value) return;
       if (item.text === "latitude") {
-        latitude = item.value;
+        latitude = Number(parseFloat(item.value).toFixed(6));
       }
       if (item.text === "longitude") {
-        longitude = item.value;
+        longitude = Number(parseFloat(item.value).toFixed(6));
       }
       if (item.text === "accuracy") {
-        accuracy = item.value;
+        accuracy = Number(parseFloat(item.value).toFixed(6));
       }
     });
-
+    console.warn("Selected Location->", latitude, longitude, accuracy);
     if (latitude && longitude && accuracy) {
       setLocation({ coords: { latitude, longitude, accuracy } });
       // mapView.animateToRegion(
@@ -63,8 +64,8 @@ export const MapCard = props => {
       !!currentLocation.coords && currentLocation.coords;
     if (latitude && longitude && accuracy) {
       let locationAnswer = [
-        { text: "latitude", value: latitude },
-        { text: "longitude", value: longitude },
+        { text: "latitude", value: latitude.toFixed(6) },
+        { text: "longitude", value: longitude.toFixed(6) },
         { text: "accuracy", value: accuracy }
       ];
       props.onSelect(locationAnswer);

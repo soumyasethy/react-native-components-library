@@ -8,12 +8,15 @@ const TakeSurveyCard = props => {
   const updateIndex = index => setCurrentIndex(index);
 
   let question = props.data.questions[currentIndex];
-  const updateAnswer = payload => {
-    if (payload && payload.length > 0) {
-      props.updateAnswer({
-        ...question,
-        answer: payload
-      });
+  const updateAnswer = (payload, type) => {
+    if (payload) {
+      props.updateAnswer(
+        {
+          ...question,
+          answer: payload
+        },
+        type
+      );
     }
   };
   return (
