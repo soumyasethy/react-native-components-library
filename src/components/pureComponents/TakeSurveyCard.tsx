@@ -37,7 +37,7 @@ const TakeSurveyCard = props => {
         onSelect={updateAnswer}
         selectLimit={question.type === questionType.singleChoice ? 1 : 0}
         selected={!question.answer ? null : question.answer}
-      />
+    />
     </AppContainer>
   );
 };
