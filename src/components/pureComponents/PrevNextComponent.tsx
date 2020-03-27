@@ -9,7 +9,7 @@ class PrevNextComponent extends Component {
     return (
       <View
         style={{
-          height: mS(screenHeight * 0.1),
+          height: mS(80),
           width: screenWidth,
           position: "absolute",
           bottom: mS(0),

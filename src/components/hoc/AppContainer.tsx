@@ -29,7 +29,11 @@ const AppContainer = () => {
           style={{
             flex: 1,
             backgroundColor: COLORS.white,
-            padding: mS(16)
+            paddingTop: mS(16),
+            paddingLeft: mS(16),
+            paddingRight: mS(16),
+            paddingBottom: mS(65),
+            opacity: props.editingDisabled ? 0.5 : 1
           }}
           pointerEvents={props.editingDisabled ? "none" : "auto"}
         >

@@ -14,7 +14,8 @@ import {
   TakeSurveyCard,
   SurveyCard,
   InputComponent,
-  DismissKeyboardView
+  DismissKeyboardView,
+  ScrollPick
 } from "./components";
 import { AppContainer } from "./components/hoc";
 import { questionType } from "./components/functionalComp/";
@@ -44,5 +45,6 @@ export {
   _storeData,
   _retrieveData,
   _logout,
-  DismissKeyboardView
+  DismissKeyboardView,
+  ScrollPick
 };

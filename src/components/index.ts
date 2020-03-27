@@ -6,11 +6,12 @@ import {
   PrevNextComponent,
   TakeSurveyCard,
   SurveyCard,
-  InputComponent
+  InputComponent,
+  ScrollPick
 } from "./pureComponents";
 import { CameraCard } from "./hooks";
 import { questionType } from "../components/functionalComp";
-import { AppContainer, FullScreenSpinnerHOC,DismissKeyboardView } from "./hoc";
+import { AppContainer, FullScreenSpinnerHOC, DismissKeyboardView } from "./hoc";
 import { COLORS } from "../utils/Colors";
 import { shadow } from "../utils/Shadow";
 import { BorderRadiusStyle } from "../utils/BorderRadiusStyle";
@@ -32,5 +33,6 @@ export {
   FullScreenSpinnerHOC,
   TakeSurveyCard,
   SurveyCard,
-  InputComponent
+  InputComponent,
+  ScrollPick
 };

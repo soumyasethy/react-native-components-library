@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 
 import PropTypes from "prop-types";
 import { mS, screenWidth } from "../../widgets/ResponsiveScreen";
-import { COLORS } from "../index";
+import { COLORS, questionType } from "../index";
 
 export const AnswereStatusCard = props => {
   return (
@@ -17,18 +17,18 @@ export const AnswereStatusCard = props => {
     >
       <Text
         style={{
-          color: props.selected.length > 0 ? COLORS.green : COLORS.grey777
+          color: props?.selected?.length > 0 ? COLORS.green : COLORS.grey777
         }}
       >
-        {props.selected.length > 0 ? "Answered" : "Unanswered"}
+        {props?.selected?.length > 0 ? "Answered" : "Unanswered"}
       </Text>
       <Text
         style={{
-          color: props.selected.length > 0 ? COLORS.green : COLORS.grey777
+          color: props?.selected?.length > 0 ? COLORS.green : COLORS.grey777
         }}
       >
-        Selected: {props.selected.length}/
-        {props.selectLimit || props.options.length}
+        Selected: {props?.selected?.length}/
+        {props?.selectLimit || props?.options?.length}
       </Text>
     </View>
   );

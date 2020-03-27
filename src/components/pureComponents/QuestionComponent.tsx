@@ -10,8 +10,7 @@ class QuestionComponent extends Component {
       <View
         style={{
           flexDirection: "column",
-          width: "100%",
-          marginTop: mS(16)
+          width: "100%"
         }}
       >
         <Text style={{ color: COLORS.grey777 }}>Single Choice</Text>

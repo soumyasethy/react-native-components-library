@@ -12,14 +12,13 @@ export const SurveyCard = props => {
             return (
               <View
                 style={{
-                  height: screenWidth * 0.5,
-                  width: "100%",
+                  width: "95%",
                   justifyContent: "center",
-                  // alignItems:"center",
                   padding: mS(16),
+                  margin:mS(8),
                   backgroundColor: COLORS.white,
-                  ...shadow
-                  // ...BorderRadiusStyle
+                  ...shadow,
+                  ...BorderRadiusStyle
                 }}
               >
                 <Text style={{ fontSize: mS(20), fontWeight: "500" }}>
@@ -50,7 +49,7 @@ export const SurveyCard = props => {
                   </Text>
                 </View>
 
-                {/*<Text style={{ color: COLORS.cyan }}>Not Started</Text>*/}
+                <Text style={{ color: COLORS.cyan }}>Not Started</Text>
                 <ButtonCard
                   style={{
                     justifyContent: "center",

@@ -86,111 +86,103 @@ export const MapCard = props => {
     longitudeDelta: LONGITUDE_DELTA
   };
   return (
-    <>
-      <AnswereStatusCard
-        selected={["current_location"]}
-        options={["current_location"]}
-        selectLimit={1}
-      />
-      <View
-        style={[
-          {
-            backgroundColor: COLORS.white,
-            padding: mS(16),
-            borderRadius: mS(5),
-            borderColor: COLORS.blue,
-            marginTop: mS(16),
-            width: "100%"
-            // ...shadow
-          }
-        ]}
+    <View
+      style={[
+        {
+          backgroundColor: COLORS.white,
+          padding: mS(16),
+          borderRadius: mS(5),
+          borderColor: COLORS.blue,
+          marginTop: mS(16),
+          width: "100%"
+          // ...shadow
+        }
+      ]}
+    >
+      <MapView
+        // provider={PROVIDER_GOOGLE}
+        ref={mapView}
+        // liteMode
+        key={`map_`}
+        style={styles.map}
+        // customMapStyle={customStyle}
+        loadingEnabled={true}
+        loadingIndicatorColor="#666666"
+        loadingBackgroundColor="#eeeeee"
+        // onRegionChange={onRegionChange}
+        initialRegion={{
+          latitude: latitude || SAMPLE_REGION.latitude,
+          longitude: longitude || SAMPLE_REGION.longitude,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA
+        }}
+        region={getMapRegion}
       >
-        <MapView
-          // provider={PROVIDER_GOOGLE}
-          ref={mapView}
-          // liteMode
-          key={`map_`}
-          style={styles.map}
-          // customMapStyle={customStyle}
-          loadingEnabled={true}
-          loadingIndicatorColor="#666666"
-          loadingBackgroundColor="#eeeeee"
-          // onRegionChange={onRegionChange}
-          initialRegion={{
-            latitude: latitude || SAMPLE_REGION.latitude,
-            longitude: longitude || SAMPLE_REGION.longitude,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA
+        <Marker
+          coordinate={{
+            latitude: latitude || 0.0 - SPACE,
+            longitude: longitude || 0.0 - SPACE
           }}
-          region={getMapRegion}
+          // centerOffset={{ x: -42, y: -60 }}
+          anchor={{ x: 0.84, y: 1 }}
         >
-          <Marker
-            coordinate={{
-              latitude: latitude || 0.0 - SPACE,
-              longitude: longitude || 0.0 - SPACE
+          <View
+            style={{
+              backgroundColor: COLORS.blue,
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+              borderRadius: 5,
+              justifyContent: "center",
+              alignItems: "center"
             }}
-            // centerOffset={{ x: -42, y: -60 }}
-            anchor={{ x: 0.84, y: 1 }}
           >
-            <View
-              style={{
-                backgroundColor: COLORS.blue,
-                paddingHorizontal: 10,
-                paddingVertical: 10,
-                borderRadius: 5,
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <Text style={{ color: COLORS.white, fontWeight: "700" }}>
-                You are here
-              </Text>
-            </View>
-          </Marker>
-        </MapView>
-        <View
-          style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            marginTop: mS(16),
-            marginBottom: mS(16),
-            width: screenWidth - mS(16 * 4)
-          }}
-        >
-          <SmallCardWithTitleSubTitle
-            title={"Latitude"}
-            subTitle={!!latitude && latitude.toFixed(4)}
-          />
-          <SmallCardWithTitleSubTitle
-            title={"Longitude"}
-            subTitle={!!longitude && longitude.toFixed(4)}
-          />
-          <SmallCardWithTitleSubTitle
-            title={"Accuracy"}
-            subTitle={`${!!accuracy && accuracy} m`}
-          />
-        </View>
+            <Text style={{ color: COLORS.white, fontWeight: "700" }}>
+              You are here
+            </Text>
+          </View>
+        </Marker>
+      </MapView>
+      <View
+        style={{
+          justifyContent: "space-between",
+          flexDirection: "row",
+          marginTop: mS(16),
+          marginBottom: mS(16),
+          width: screenWidth - mS(16 * 4)
+        }}
+      >
         <SmallCardWithTitleSubTitle
-          title={"Area"}
-          subTitle={"Bellandure, Bangalore, Karnataka, India"}
+          title={"Latitude"}
+          subTitle={!!latitude && latitude.toFixed(4)}
         />
-        <ButtonCard
-          style={{ justifyContent: "center", alignItems: "center" }}
-          item={{
-            text:
-              props.selected && props.selected.length >= 0
-                ? "Update Location"
-                : "Tag Location"
-          }}
-          addToSelected={async () => {
-            console.warn("clicked");
-            await requestGPSPermission(setLocation);
-            // console.warn("position->", position);
-          }}
-          isSelected={false}
+        <SmallCardWithTitleSubTitle
+          title={"Longitude"}
+          subTitle={!!longitude && longitude.toFixed(4)}
+        />
+        <SmallCardWithTitleSubTitle
+          title={"Accuracy"}
+          subTitle={`${!!accuracy && accuracy} m`}
         />
       </View>
-    </>
+      <SmallCardWithTitleSubTitle
+        title={"Area"}
+        subTitle={"Bellandure, Bangalore, Karnataka, India"}
+      />
+      <ButtonCard
+        style={{ justifyContent: "center", alignItems: "center" }}
+        item={{
+          text:
+            props.selected && props.selected.length >= 0
+              ? "Update Location"
+              : "Tag Location"
+        }}
+        addToSelected={async () => {
+          await requestGPSPermission(setLocation);
+          // console.warn("position->", position);
+        }}
+        isSelected={false}
+      />
+    </View>
   );
 };
 
@@ -210,10 +202,10 @@ const SmallCardWithTitleSubTitle = props => {
   );
 };
 const getLocation = callBack => {
-  console.warn("Getting Location");
+  // console.warn("Getting Location");
   Geolocation.getCurrentPosition(
     position => {
-      console.warn("Location->", position);
+      // console.warn("Location->", position);
       callBack(position);
     },
     error => {

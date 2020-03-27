@@ -15,7 +15,7 @@ export const CompletedStatusCard = props => {
     <View
       style={{
         width: screenWidth,
-        marginTop: mS(16),
+        marginTop: mS(8),
         justifyContent: "center",
         flexDirection: "column",
         ...shadow

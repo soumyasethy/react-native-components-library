@@ -59,6 +59,7 @@ interface IlistenOrientationChange {
 }
 const listenOrientationChange = (that: IlistenOrientationChange) => {
   Dimensions.addEventListener("change", newDimensions => {
+    console.warn("Screen Changed")
     // Retrieve and save new dimensions
     screenWidth = newDimensions.window.width;
     screenHeight = newDimensions.window.height;

@@ -6,6 +6,7 @@ import { CameraCard } from "../hooks/CameraCard";
 import TakeSurveyCard from "./TakeSurveyCard";
 import { SurveyCard } from "./SurveyCard";
 import * as InputComponent from "./InputComponent";
+import ScrollPick from "./ScrollPick/ScrollPick";
 
 export {
   CompletedStatusCard,
@@ -15,5 +16,6 @@ export {
   CameraCard,
   TakeSurveyCard,
   SurveyCard,
-  InputComponent
+  InputComponent,
+  ScrollPick
 };

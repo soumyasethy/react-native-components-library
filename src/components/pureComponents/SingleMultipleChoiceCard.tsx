@@ -39,47 +39,30 @@ export const SingleMultipleChoiceCard = props => {
 
   if (!!props.options) {
     return (
-      <View style={{ width: "100%", height: "100%" }}>
-        <AnswereStatusCard
-          selected={selected}
-          options={props.options}
-          selectLimit={props.selectLimit}
-        />
-        <ScrollView
-          alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={true}
-          pagingEnabled={true}
-          overScrollMode={"always"}
-          contentContainerStyle={{ flexGrow: 1 }}
-          style={{ flex: 1 }}
-        >
-          <View
-            style={{
-              flexGrow: 1,
-              padding: 10,
-              flexDirection: "column",
-              flexWrap: "wrap",
-              alignItems: "flex-start"
-            }}
-          >
-            {props.options.map((item, index) => {
-              let ifExists = find(selected, item);
-              return (
-                <ButtonCard
-                  item={item}
-                  addToSelected={addToSelected}
-                  isSelected={!!ifExists}
-                />
-              );
-            })}
-            <View
-              style={{
-                height: mS(screenHeight * 0.1)
-                // width: "100%"
-              }}
-            ></View>
-          </View>
-        </ScrollView>
+      <View
+        style={{
+          flexGrow: 1,
+          padding: 10,
+          flexDirection: "column",
+          flexWrap: "wrap",
+          alignItems: "flex-start"
+        }}
+      >
+        {props.options.map((item, index) => {
+          let ifExists = find(selected, item);
+          return (
+            <ButtonCard
+              item={item}
+              addToSelected={addToSelected}
+              isSelected={!!ifExists}
+            />
+          );
+        })}
+        <View
+          style={{
+            height: mS(screenHeight * 0.1)
+          }}
+        ></View>
       </View>
     );
   }

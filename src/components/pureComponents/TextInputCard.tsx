@@ -22,17 +22,12 @@ export const TextInputCard = props => {
 
   return (
     <View style={{ width: "100%" }}>
-      <AnswereStatusCard
-        selected={!!text ? ["text"] : []}
-        options={["text"]}
-        selectLimit={0}
-      />
       <View
         style={{
           marginTop: mS(16),
-          padding: mS(8),
-          backgroundColor: COLORS.white,
-          ...shadow
+          padding: mS(8)
+          // backgroundColor: COLORS.white,
+          // ...shadow
         }}
       >
         <OutlinedTextField
