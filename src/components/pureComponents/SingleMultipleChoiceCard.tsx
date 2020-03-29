@@ -3,6 +3,7 @@ import { ScrollView, View } from "react-native";
 import { ButtonCard } from "./ButtonCard";
 import { mS, screenHeight } from "../../widgets/ResponsiveScreen";
 import { AnswereStatusCard } from "./AnswereStatusCard";
+import { TextInputCard } from "./TextInputCard";
 
 export const SingleMultipleChoiceCard = props => {
   const [selected, setSelected] = useState([]);
@@ -14,11 +15,14 @@ export const SingleMultipleChoiceCard = props => {
   }, []);
 
   useEffect(() => {
-    console.warn("selected->", selected);
     props.onSelect(selected);
   }, [selected, props.options]);
 
   const addToSelected = item => {
+    if (item?.text !== item?.value) {
+      setSelected([item]);
+      return;
+    }
     let limitCheck = checkLimit(selected, props.selectLimit);
     let ifExists = find(selected, item);
     if (props.selectLimit === 1 && !limitCheck && !ifExists) {
@@ -55,6 +59,7 @@ export const SingleMultipleChoiceCard = props => {
               item={item}
               addToSelected={addToSelected}
               isSelected={!!ifExists}
+              selected={props.selected}
             />
           );
         })}
@@ -68,9 +73,14 @@ export const SingleMultipleChoiceCard = props => {
   }
 };
 const find = (arr, searchItem) => {
-  return arr.find((item, index) => {
-    return item.value === searchItem.value;
-  });
+  try {
+    return arr.find((item, index) => {
+      return item?.text === searchItem?.text;
+    });
+  } catch (e) {
+    console.warn("Error", searchItem, arr, e.message);
+    return false;
+  }
 };
 const checkLimit = (arr, limit) => {
   if (limit === 0) return true;

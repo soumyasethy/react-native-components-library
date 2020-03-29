@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import {
-  Modal,
+  ActivityIndicator,
   Text,
   TextInput,
   View,
@@ -27,15 +27,19 @@ class ScrollPick extends PureComponent {
     selectedIndex: 0,
     showSubmitBtn: true
   };
+
   resetSearch = () => {
     this.setState({
       text: "",
       selectedIndex: 0,
       selected: this.props.arrayData[0]
     });
+    this.props?.onTextChange("");
   };
-  updateSearchKeyword = ({ text }) => {
+  updateSearchKeyword = text => {
+    // console.warn("updateSearchKeyword", text);
     this.setState({ text });
+    this.props?.onTextChange(text);
   };
   updateSelected = ({ selected, selectedIndex }) => {
     this.setState({ selected, selectedIndex });
@@ -66,40 +70,32 @@ class ScrollPick extends PureComponent {
 
   render() {
     return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={this.props.modalVisible}
-        onRequestClose={this.props.onRequestClose}
-      >
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={styles.container}>
-            <Header
-              {...this.props}
-              {...this.state}
-              updateSearchKeyword={this.updateSearchKeyword}
-              resetSearch={this.resetSearch.bind(this)}
-            />
+      <View style={styles.container}>
+        <Header
+          {...this.props}
+          {...this.state}
+          updateSearchKeyword={this.updateSearchKeyword}
+          resetSearch={this.resetSearch.bind(this)}
+        />
 
-            <Body
-              {...this.props}
-              text={this.state.text}
-              selectedIndex={this.state.selectedIndex}
-              updateSelected={this.updateSelected}
-              resetSearch={this.resetSearch.bind(this)}
-            />
-            {this.state.showSubmitBtn && (
-              <Footer
-                {...this.props}
-                text={this.state.text}
-                selectedIndex={this.state.selectedIndex}
-                selected={this.state.selected}
-                resetSearch={this.resetSearch.bind(this)}
-              />
-            )}
-          </View>
-        </SafeAreaView>
-      </Modal>
+        <Body
+          {...this.props}
+          arrayData={this.props.arrayData}
+          text={this.state.text}
+          selectedIndex={this.state.selectedIndex}
+          updateSelected={this.updateSelected}
+          resetSearch={this.resetSearch.bind(this)}
+        />
+        {this.state.showSubmitBtn && (
+          <Footer
+            {...this.props}
+            text={this.state.text}
+            selectedIndex={this.state.selectedIndex}
+            selected={this.state.selected}
+            resetSearch={this.resetSearch.bind(this)}
+          />
+        )}
+      </View>
     );
   }
 }
@@ -129,7 +125,7 @@ const AddToList = props => {
             fontWeight: "700"
           }}
         >
-          + Add this {props.profSource}
+          + Add this {props.text}
         </Text>
       </TouchableOpacity>
     </View>
@@ -145,7 +141,16 @@ const Body = props => {
         }
       ]}
     >
-      {props.filter &&
+      {props?.isLoading && (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color={COLORS.blue} />
+          <Text>Please wait...</Text>
+        </View>
+      )}
+      {false &&
+        props.filter &&
         props.arrayData.filter(data =>
           data.toUpperCase().includes(props.text.toUpperCase())
         ).length === 0 && <AddToList {...props} />}
@@ -169,6 +174,8 @@ const Body = props => {
             itemHeight={60}
             highlightBorderWidth={1}
             filter={!!props.filter}
+            onScrollEndDrag={props?.onScrollEndDrag}
+            onMomentumScrollEnd={props?.onMomentumScrollEnd}
           />
         </View>
       )}
@@ -179,9 +186,7 @@ const Header = props => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => {
-        props.onRequestClose();
-      }}
+      onPress={props.onRequestClose}
       style={[styles.headerWrapper, { height: !!props.filter ? "30%" : "60%" }]}
     >
       <View style={styles.header}>
@@ -200,18 +205,7 @@ const Header = props => {
             contextMenuHidden={true}
             maxLength={64}
             style={styles.textInput}
-            onChangeText={e => {
-              props.changeSearchText(e);
-              props.updateSearchKeyword({ text: e });
-              props.changeDs(
-                props.arrayData
-                  .filter(o => o.toLowerCase().indexOf(e.toLowerCase()) > -1)
-                  .map((item, index) => ({
-                    key: index,
-                    value: item
-                  }))
-              );
-            }}
+            onChangeText={props.updateSearchKeyword}
           />
         )}
       </View>
@@ -265,7 +259,7 @@ const styles = StyleSheet.create({
   heading: {
     //fontWeight: fonts.weight.bold,
     fontSize: fonts.size.large,
-    color: COLORS.blackfaded,
+    color: COLORS.blackdark,
     paddingVertical: spacing.small
   },
   description: {

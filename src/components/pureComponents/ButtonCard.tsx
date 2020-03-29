@@ -4,6 +4,7 @@ import { COLORS } from "../../utils/Colors";
 import { shadow } from "../../utils/Shadow";
 import { mS } from "../../widgets/ResponsiveScreen";
 import { BorderRadiusStyle } from "../../utils/BorderRadiusStyle";
+import { TextInputCard } from "./TextInputCard";
 
 export const ButtonCard = props => {
   if (!!props.isLoading) {
@@ -27,38 +28,51 @@ export const ButtonCard = props => {
     );
   }
   return props.isSelected ? (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => props.addToSelected(props.item)}
-      style={{
-        padding: mS(10),
-        backgroundColor: COLORS.blue,
-        marginTop: mS(16),
-        borderRadius: mS(5),
-        borderColor: COLORS.blue,
-        borderWidth: mS(0.5),
-        ...shadow,
-        ...(props.style ? props.style : null)
-      }}
-    >
-      {
-        <View
-          style={{
-            margin: mS(5)
-          }}
-        >
-          <Text
+    <>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => props.addToSelected(props.item)}
+        style={{
+          padding: mS(10),
+          backgroundColor: COLORS.blue,
+          marginTop: mS(16),
+          borderRadius: mS(5),
+          borderColor: COLORS.blue,
+          borderWidth: mS(0.5),
+          ...shadow,
+          ...(props.style ? props.style : null)
+        }}
+      >
+        {
+          <View
             style={{
-              color: COLORS.white,
-              fontSize: mS(16),
-              fontWeight: "500"
+              margin: mS(5)
             }}
           >
-            {props.item.text}
-          </Text>
-        </View>
-      }
-    </TouchableOpacity>
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: mS(16),
+                fontWeight: "500"
+              }}
+            >
+              {props.item.text}
+            </Text>
+          </View>
+        }
+      </TouchableOpacity>
+      {props.item.text.toUpperCase() === "OTHER" && (
+        <TextInputCard
+          selected={
+            props.item.value.toUpperCase() === "OTHER" ? "" : props.item.value
+          }
+          onSelect={text => {
+            props.item.value = text;
+            props.addToSelected(props.item);
+          }}
+        />
+      )}
+    </>
   ) : (
     <TouchableOpacity
       activeOpacity={1}
