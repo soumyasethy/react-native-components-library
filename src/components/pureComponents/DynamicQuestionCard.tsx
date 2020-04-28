@@ -11,6 +11,7 @@ import QuestionComponent from "./QuestionComponent";
 import { TextInputCard } from "./TextInputCard";
 import { mS } from "../../widgets/ResponsiveScreen";
 import { AnswereStatusCard } from "./AnswereStatusCard";
+import { UploadImageWidget } from "../../widgetization/components";
 class DynamicQuestionCard extends PureComponent {
   render() {
     return (
@@ -41,7 +42,8 @@ class DynamicQuestionCard extends PureComponent {
       case questionType.gps:
         return <MapCard {...this.props} />;
       case questionType.picture:
-        return <CameraCard {...this.props} />;
+        // return <CameraCard {...this.props} />;
+        return <UploadImageWidget {...this.props} />;
       case questionType.inputType:
         return <TextInputCard {...this.props} />;
       default: {

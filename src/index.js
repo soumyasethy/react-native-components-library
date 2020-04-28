@@ -21,6 +21,7 @@ import { AppContainer } from "./components/hoc";
 import { questionType } from "./components/functionalComp/";
 import Swiper from "react-native-swiper";
 import { _storeData, _retrieveData, _logout } from "./storage";
+import { BasePage, BaseWidget } from "./widgetization";
 
 export {
   s,
@@ -46,5 +47,7 @@ export {
   _retrieveData,
   _logout,
   DismissKeyboardView,
-  ScrollPick
+  ScrollPick,
+  BaseWidget,
+  BasePage
 };

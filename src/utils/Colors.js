@@ -1,6 +1,7 @@
 export const COLORS = {
   gray: "#E5E5E5",
   blue: "#008DEA",
+  blue_light: "rgba(0, 141, 234, 0.10)",
   white: "#FFFFFF",
   black: "#3E3E3E",
   border: "#E2E2E2",
